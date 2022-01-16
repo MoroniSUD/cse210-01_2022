@@ -1,8 +1,6 @@
 
 def main():
-
     
-
     #I create the TicTacToe board
     board = [['1','|','2','|','3'],
     ['-','+','-','+','-'],
@@ -13,25 +11,15 @@ def main():
 
     print_board(board)
 
-def print_board(board):
-    for row in board:
-        for i in range(len(row)):
-            if i == len(row)-1:
-                print(row[i], end='\n')
-            else:
-                print(row[i], end=' ')      
-    return board                
-
-def print_first_board(first_board):
     turn_1 = True
     player_1 = ''
     player_2 = ''
     lap = 0
     while lap < 9:
         if player_1 == '':
-            print("Enter the player's name 1 (X):\n")
+            print("Enter the player's name 1 (X): ")
             player_1 = input()
-            print("Enter the player's name 2 (O):\n")
+            print("Enter the player's name 2 (O): ")
             player_2 = input()
         else:
             if turn_1:
@@ -40,7 +28,23 @@ def print_first_board(first_board):
                 print(player_2 + ' Select a board position: ')    
 
             move_player = int(input()) 
-    return first_board              
+
+            value = change_board(board, move_player, turn_1) 
+            if value == 0:
+                turn_1 = not turn_1
+                lap += 1
+                print_board(board)
+            else:    
+                print(value)
+
+def print_board(board):
+    for row in board:
+        for i in range(len(row)):
+            if i == len(row)-1:
+                print(row[i], end='\n')
+            else:
+                print(row[i], end=' ')      
+    return board                
 
 def change_board(board, position, turn_player):
     if turn_player:
@@ -105,7 +109,8 @@ def change_board(board, position, turn_player):
     else:
         return 'This position does not exist.'
 
-
+def who_won(board):
+    
 
 # Call main to start this program.
 if __name__ == "__main__":
