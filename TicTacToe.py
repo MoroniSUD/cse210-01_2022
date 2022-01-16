@@ -34,8 +34,17 @@ def main():
                 turn_1 = not turn_1
                 lap += 1
                 print_board(board)
+                if who_won(board) == 1:
+                    print('Well played! The winner is ' + player_1)
+                    break
+                elif who_won(board) == 2:
+                    print('Well played! The winner is ' + player_2)
+                    break
             else:    
                 print(value)
+
+            if lap == 9:
+                print('The strategy was not good!' + player_1 + 'and' + player_2 + 'They tied.')    
 
 def print_board(board):
     for row in board:
@@ -110,7 +119,22 @@ def change_board(board, position, turn_player):
         return 'This position does not exist.'
 
 def who_won(board):
-    
+    for symbol in ['X', 'O']:
+        row_0 = board[0][0] == symbol and board[0][2] == symbol and board[0][4] == symbol
+        row_2 = board[2][0] == symbol and board[2][2] == symbol and board[2][4] == symbol
+        row_4 = board[4][0] == symbol and board[4][2] == symbol and board[4][4] == symbol
+        column_0 = board[0][0] == symbol and board[2][0] == symbol and board[4][0] == symbol
+        column_2 = board[0][2] == symbol and board[2][2] == symbol and board[4][2] == symbol
+        column_4 = board[0][4] == symbol and board[2][4] == symbol and board[4][4] == symbol
+        line_down = board[0][0] == symbol and board[2][2] == symbol and board[4][4] == symbol
+        line_up = board[4][0] == symbol and board[2][2] == symbol and board[0][4] == symbol
+
+        if row_0 or row_2 or row_4 or column_0 or column_2 or column_4 or line_down or line_up:
+            if symbol == 'X':
+                return 1
+            elif symbol == 'O':
+                return 2
+            break        
 
 # Call main to start this program.
 if __name__ == "__main__":
