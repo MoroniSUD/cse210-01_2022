@@ -1,3 +1,6 @@
+#W02 Introduction: Ponder and Prove
+#Autor: Carrasco Dario
+#Instructor: Bro. Lythgoe
 
 def main():
     
@@ -9,31 +12,43 @@ def main():
     ['7','|','8','|','9']
     ]
 
-    print_board(board)
-
+    #Declare the variables to use.
     turn_1 = True
     player_1 = ''
     player_2 = ''
     lap = 0
+
+    #Prints board status
+    print_board(board)
+
+    #This while you go through all the options of the game
     while lap < 9:
+        #First check if there are players loaded
         if player_1 == '':
             print("Enter the player's name 1 (X): ")
             player_1 = input()
             print("Enter the player's name 2 (O): ")
             player_2 = input()
         else:
+            #Whose turn is it
             if turn_1:
                 print(player_1 + ' Select a board position: ') 
             else:
-                print(player_2 + ' Select a board position: ')    
-
+                print(player_2 + ' Select a board position: ')   
+                
+            #I save the player option
             move_player = int(input()) 
 
+            #Evaluated the value returned by the function change board
             value = change_board(board, move_player, turn_1) 
             if value == 0:
+                #Change the status from true to false or false to true
                 turn_1 = not turn_1
+                #Add one more lap
                 lap += 1
+                #Print the new board
                 print_board(board)
+                #Check if there is a winner
                 if who_won(board) == 1:
                     print('Well played! The winner is ' + player_1)
                     break
@@ -42,11 +57,16 @@ def main():
                     break
             else:    
                 print(value)
-
+            #In case of tie
             if lap == 9:
                 print('The strategy was not good!' + player_1 + 'and' + player_2 + 'They tied.')    
 
 def print_board(board):
+    '''I print the board in grid format. 
+    Parameters:
+    board: the dictionary containing the data format.
+    return the new board as grid            
+    '''
     for row in board:
         for i in range(len(row)):
             if i == len(row)-1:
@@ -56,6 +76,13 @@ def print_board(board):
     return board                
 
 def change_board(board, position, turn_player):
+    '''Modify the board based on player options and choices.
+    Parameters:
+    board: the dictionary containing the data format.
+    position: option entered by the user
+    trun_player: the player's turn, true player_1 false player_2.
+    return the board with the options marked by the player and the options of the next player.
+    '''
     if turn_player:
         symbol = 'X'
     else:
@@ -119,6 +146,11 @@ def change_board(board, position, turn_player):
         return 'This position does not exist.'
 
 def who_won(board):
+    '''Validates all values entered, to know if there is a winner.
+    Parameters:
+    board: the dictionary containing the data format.
+    return value 1 if the winner is player_1, value two if the winner is player_2. 
+    '''
     for symbol in ['X', 'O']:
         row_0 = board[0][0] == symbol and board[0][2] == symbol and board[0][4] == symbol
         row_2 = board[2][0] == symbol and board[2][2] == symbol and board[2][4] == symbol
